@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Heru Autobot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://l.top4top.io/p_3203n4uzy0.jpeg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.hCaptcha.com/1/api.js" async defer></script>
+</head>
+<body>
+    <div class="sticky-header">
+        <span>AUTO FBBOT</span>
+        <svg xmlns="https://i.imgur.com/eK7r0Lz.jpeg" viewBox="0 0 64 64" class="robot-icon-svg">
+            <circle cx="32" cy="32" r="30" fill="#355c7d" stroke="#fff" stroke-width="4"></circle>
+            <rect x="22" y="22" width="20" height="12" rx="2" ry="2" fill="#fff"></rect>
+            <circle cx="27" cy="28" r="2" fill="#355c7d"></circle>
+            <circle cx="37" cy="28" r="2" fill="#355c7d"></circle>
+            <path d="M24 40h16v4H24z" fill="#fff"></path>
+        </svg>
+    </div>
+    <div class="container">
+        <div class="centered-box">
+            <div class="header">Autobot Beta.v1</div>
+            <form id="json-form" onsubmit="State(); return false;">
+                <div class="form-group">
+                    <label for="inputOfPrefix" class="form-label">Prefix (optional)</label>
+                    <input type="text" id="inputOfPrefix" class="form-control" placeholder="Choose one: .$, #, @, !, etc.">
+                </div>
+                <div class="form-group">
+                    <label for="inputOfAdmin" class="form-label">Admin UID</label>
+                    <input type="text" id="inputOfAdmin" class="form-control" placeholder="Example: (1000xxxxxxxxxx)">
+                </div>
+                <div class="form-group">
+                    <label for="json-data" class="form-label">Appstate</label>
+                    <textarea id="json-data" class="form-control" rows="3" placeholder="Paste your appstate here"></textarea>
+                </div>
+                
+                <div class="h-captcha mb-3" data-sitekey="6b5a506e-395a-46d0-8bba-77941038b772" data-callback="onCaptchaSuccess"></div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="agreeCheckbox" disabled>
+                    <label for="agreeCheckbox" class="form-label">I agree to the terms and policies</label>
+                </div>
+                <button class="submit-btn" disabled id="submitButton" onclick="State()">Submit</button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ by Jay Mar.<br>Time: <span id="time"></span> GMT+8</p>
+            <p>Ping: <span id="ping">0 ms</span></p>
+            <button id="infoButton" class="btn btn-primary" onclick="toggleInfo()">Show Online</button>
+            <div id="infoContainer" class="mt-3" style="display:none;">
+    <h5 style="font-weight: 600;">Online:</h5>
+    <div id="info"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>

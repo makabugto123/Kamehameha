@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Heru Autobot</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="https://l.top4top.io/p_3203n4uzy0.jpeg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    padding: 14px;
+    background-color: #000000;
+    height: 100%;
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            background-color: rgba(0, 0, 0, 0.836);
+    border-radius: 3px;
+    box-shadow: 0 0 10px #00ff62e8;
+    padding: 14px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+        }
+        .centered-box {
+            background-color: #3a3a3a;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        #logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #f5f5f5;
+            position: relative;
+            overflow: hidden;
+        }
+        h1::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: shine 2s infinite;
+        }
+        @keyframes shine {
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 100%;
+            }
+            100% {
+                left: 100%;
+            }
+        }
+        .form-label {
+            font-size: 16px;
+            color: #f5f5f5;
+            margin-top: 10px;
+        }
+
+.form-control {
+    background-color: #2f2f2f;
+    border: 1px dashed #999;
+    border-radius: 8px;
+    color: #f5f5f5;
+    background: url("https://i.imgur.com/0VZZpDl.jpeg");
+    background-size: cover;
+    background-position: center;
+}
+
+.form-control::placeholder {
+    color: #999;
+    opacity: 1;
+    }
+            
+        .checkbox-container {
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-container input {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            width: 100%;
+            background-color: #28a745;
+            color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            border: none;
+            margin-top: 20px;
+        }
+        .submit-btn:disabled {
+            background-color: #6c757d;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #aaa;
+        }
+        #ping {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="centered-box">
+            <div class="header">
+                <img id="logo" src="https://k.top4top.io/p_32038xox10.jpeg" alt="Logo">
+                <h1>HERU AUTOBOT</h1>
+            </div>
+            <form id="json-form" onsubmit="submitForm(event)"><br>
+                <div class="form-group">
+                    <label for="inputOfPrefix" class="form-label">Prefix (optional):</label>
+                    <input type="text" id="inputOfPrefix" class="form-control" placeholder="Choose one: .$, #, @, !, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputOfAdmin" class="form-label">Admin UID:</label>
+                    <input type="text" id="inputOfAdmin" class="form-control" placeholder="Example: (1000xxxxxxxxxx)">
+                </div>
+
+                <div class="form-group">
+                    <label for="json-data" class="form-label">Appstate:</label>
+                    <textarea id="json-data" class="form-control" rows="3" placeholder="Paste your appstate here"></textarea>
+                </div>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="agreeCheckbox">
+                    <label for="agreeCheckbox" class="form-label">I agree to the terms and policies</label>
+                </div>
+
+                <button class="submit-btn" disabled id="submitButton" onclick="State()">Submit</button>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>Powered by HERU</p>
+            <p>© 2024 | heru | All rights reserved.<br>Time: <span id="time"></span> GMT+8</p>
+            <p>Ping: <span id="ping">0 ms</span></p>
+            <p>Active Session: <span id="sessionCount">Loading...</span></p>
+        </div>
+    </div>
+
+    <audio id="background-music" autoplay loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        window.onload = function() {
+            Swal.fire({
+                title: 'Notice',
+                html: `
+                    Upon deployment or login, your chatbot connection remains active unless you personally access the bot's account or modify the password. 
+                    This measure ensures seamless operation and security.<br><br>
+                    We respect your privacy and will not share your personal information with third parties without your consent.<br>
+                    We may collect and store certain information such as your Facebook public profile and interactions with the bot for improving user experience.<br><br>
+                    Contact the developer: <a href="https://www.facebook.com/jaymar.dev.00" style="color: #1d72b8;" target="_blank">Facebook</a>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Okay'
+            });
+
+            var music = document.getElementById("background-music");
+     
+       music.volume = 0.5;
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js"></script>
+</body>
+</html>
