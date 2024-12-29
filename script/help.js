@@ -3,9 +3,9 @@ module.exports.config = {
   version: '1.0.0',
   role: 0,
   hasPrefix: true,
-  aliases: ['guide'],
+  aliases: ['welp'],
   description: "Beginner's guide",
-  usage: "Help [page] or [command]",
+  usage: "Help [page], Help all, or [command]",
   credits: 'heru',
   commandsPerPage: 10
 };
@@ -17,7 +17,7 @@ module.exports.run = async function ({
   args,
   prefix
 }) {
-  const input = args.join(' ');
+  const input = args.join(' ').toLowerCase();
   try {
     const commands = enableCommands[0].commands;
     const commandsPerPage = module.exports.config.commandsPerPage;
@@ -37,7 +37,15 @@ module.exports.run = async function ({
         helpMessage += `⊂⊃ ➤ ${commands[i]}\n`;
       }
 
-      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}\n⊂⊃ ➤ 𝗣𝗮𝗴𝗲 ${page} of ${totalPages}`;
+      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}\n⊂⊃ ➤ 𝗣𝗮𝗴𝗲 ${page} of ${totalPages}\n⊂⊃ ➤ 𝗧𝗼 𝘀𝗲𝗲 𝗮𝗹𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀, 𝘁𝘆𝗽𝗲 "𝗵𝗲𝗹𝗽 𝗮𝗹𝗹".`;
+    } else if (input === 'all') {
+      helpMessage += `✨ 𝗔𝗹𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀\n━━━━━━━━━━━━━━━\n`;
+
+      for (let i = 0; i < totalCommands; i++) {
+        helpMessage += `⊂⊃ ➤ ${commands[i]}\n`;
+      }
+
+      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}`;
     } else if (!isNaN(input)) {
       const page = parseInt(input);
       const totalPages = Math.ceil(totalCommands / commandsPerPage);
@@ -70,11 +78,7 @@ module.exports.handleEvent = async function ({
   event,
   prefix
 }) {
-  const {
-    threadID,
-    messageID,
-    body
-  } = event;
+  const { threadID, messageID, body } = event;
   const message = prefix ? `𝗣𝗿𝗲𝗳𝗶𝘅 ➠ 【 ${prefix} 】` : "𝗣𝗿𝗲𝗳𝗶𝘅 ➠ 【 𝙽𝙾𝙽𝙴-𝙿𝚁𝙴𝙵𝙸𝚇 】";
   if (body?.toLowerCase().startsWith('prefix')) {
     api.sendMessage(message, threadID, messageID);

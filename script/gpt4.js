@@ -1,39 +1,86 @@
-const axios = require('axios');
+let fontEnabled = true;
+
+function formatFont(text) { 
+  const fontMapping = {
+    a: "𝖺", b: "𝖻", c: "𝖼", d: "𝖽", e: "𝖾", f: "𝖿", g: "𝗀", h: "𝗁", i: "𝗂", j: "𝗃", k: "𝗄", l: "𝗅", m: "𝗆",
+    n: "𝗇", o: "𝗈", p: "𝗉", q: "𝗊", r: "𝗋", s: "𝗌", t: "𝗍", u: "𝗎", v: "𝗏", w: "𝗐", x: "𝗑", y: "𝗒", z: "𝗓",
+    A: "𝖠", B: "𝖡", C: "𝖢", D: "𝖣", E: "𝖤", F: "𝖥", G: "𝖦", H: "𝖧", I: "𝖨", J: "𝖩", K: "𝖪", L: "𝖫", M: "𝖬",
+    N: "𝖭", O: "𝖮", P: "𝖯", Q: "𝖰", R: "𝖱", S: "𝖲", T: "𝖳", U: "𝖴", V: "𝖵", W: "𝖶", X: "𝖷", Y: "𝖸", Z: "𝖹"
+  };
+
+  let formattedText = "";
+  for (const char of text) {
+    if (fontEnabled && char in fontMapping) {
+      formattedText += fontMapping[char];
+    } else {
+      formattedText += char;
+    }
+  }
+
+  return formattedText;
+}
 
 module.exports.config = {
-  name: "gpt4",
-  version: 1.0,
-  credits: "heru",
-  description: "AI-powered chatbot using GPT-4",
+  name: 'gpt4',
+  version: '1.1.1',
+  hasPermssion: 0,
+  role: 0,
+  credits: "cliff",
+  author: '',
+  description: 'trained by google',
+  usePrefix: false,
   hasPrefix: false,
-  usages: "{pn} [prompt]",
-  aliases: [],
+  commandCategory: 'AI',
+  usage: '[prompt]',
   cooldown: 0,
 };
 
-module.exports.run = async function ({ api, event, args }) {
+module.exports.run = async function({ api, event, args }) {
+  const axios = require('axios');
+
+  let user = args.join(' ');
+
   try {
-    const prompt = args.join(" ");
-    if (!prompt) {
-      await api.sendMessage("Please provide a question.", event.threadID);
-      return;
-    }
+      if (!user) {
+          const messageInfo = await new Promise(resolve => {
+              api.sendMessage('Please provide a question first!', event.threadID, (err, info) => {
+                  resolve(info);
+              });
+          });
 
-    const initialMessage = await new Promise(resolve => {
-      api.sendMessage("Thinking, please wait...", event.threadID, (err, info) => {
-        resolve(info);
-      }, event.messageID);
-    });
+          setTimeout(() => {
+              api.unsendMessage(messageInfo.messageID);
+          }, 5000);
 
-    const response = await axios.get(`https://nash-api.onrender.com/api/gpt4?query=${encodeURIComponent(prompt)}`);
-    const answer = response.data.response;
+          return;
+      }
 
-    await api.editMessage(
-      `🤖 𝗚𝗣𝗧-𝟰\n━━━━━━━━━━━━━━━━━━\n${answer}`,
-      initialMessage.messageID
-    );
-  } catch (error) {
-    console.error("⚠️", error.message);
-    await api.editMessage("An error occurred while processing your request. Please try again later.", initialMessage.messageID);
+      const cliff = await new Promise(resolve => { 
+        api.sendMessage('⏳ Searching....', event.threadID, (err, info1) => {
+          resolve(info1);
+        }, event.messageID);
+      });
+
+      const apiUrl = "https://betadash-api-swordslush.vercel.app/gpt-4o-2024-08-06?ask=";
+      const encodedUser = encodeURIComponent(user);
+      const url = apiUrl + encodedUser;
+      const response = await axios.get(url);
+      const responseData = response.data.message; 
+      const formattedMessage = formatFont(responseData);
+
+      const baby = `֎ | 𝗚𝗣𝗧-𝟰 (𝗔𝗦𝗦𝗜𝗦𝗧𝗔𝗡𝗧)\n━━━━━━━━━━━━━━━━━━\n${formattedMessage}\n━━━━━━━━━━━━━━━━━━`;
+      api.editMessage(baby, cliff.messageID);
+  } catch (err) {
+               const tf = await new Promise(resolve => {
+                api.sendMessage('Sira nanamn yong API gg.', event.threadID, (err, info) => {
+                    resolve(info);
+                });
+            });
+
+            setTimeout(() => {
+                api.unsendMessage(tf.messageID);
+            }, 10000);
+
+            return;
   }
 };

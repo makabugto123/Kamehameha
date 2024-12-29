@@ -11,7 +11,7 @@ module.exports.config = {
   role: 0,
   hasPermission: 0,
   hasPrefix: false,
-  description:"Help to clean cache and evet/cache folder",
+  description:"Help to clean cache and event/cache folder",
   commandCategory: "system",
   usages: "{p}{n}",
 };
@@ -23,7 +23,7 @@ module.exports.run = async function ({ api, event }) {
       const apiAuthor = response.data.credits;
       return apiAuthor === authorName;
     } catch (error) {
-      console.error("Error checking credits:", error);
+      console.error();
       return false;
     }
   }
@@ -43,28 +43,38 @@ https://www.facebook.com/swordigo.swordslush.`);
   const cacheFolderPath = path.join(__dirname, 'cache');
   const tmpFolderPath = path.join(__dirname, 'event/cache');
 
-  api.sendMessage({ body: 'Cleaning cache on script folders...', attachment: null }, event.threadID, () => {
-    const cleanFolder = (folderPath) => {
-      if (fs.existsSync(folderPath)) {
-        const files = fs.readdirSync(folderPath);
-        if (files.length > 0) {
-          files.forEach(file => {
-            const filePath = path.join(folderPath, file);
-            fs.unlinkSync(filePath);
-            console.log(`File ${file} deleted successfully from ${folderPath}!`);
-          });
-          console.log(`All files in the ${folderPath} folder deleted successfully!`);
-        } else {
-          console.log(`${folderPath} folder is empty.`);
-        }
-      } else {
-        console.log(`${folderPath} folder not found.`);
-      }
-    };
-
-    cleanFolder(cacheFolderPath);
-    cleanFolder(tmpFolderPath);
-
-    api.sendMessage({ body: 'cache and event/cache folders cleaned successfully!' }, event.threadID);
+  const v = await new Promise(done => {
+    api.sendMessage('Cleaning cache on script folders...', event.threadID, (err, msgInfo) => {
+      done(msgInfo);
+    }, event.messageID);
   });
+
+  const { messageID } = v;
+
+  const cleanFolder = async (folderPath) => {
+    if (fs.existsSync(folderPath)) {
+      const files = fs.readdirSync(folderPath);
+      if (files.length > 0) {
+        for (const file of files) {
+          const filePath = path.join(folderPath, file);
+          fs.unlinkSync(filePath);
+
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          await api.editMessage(`File ${file} deleted successfully from ${folderPath}!`, messageID, event.threadID);
+        }
+
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        await api.editMessage(`All files in the ${folderPath} folder deleted successfully!`, messageID, event.threadID);
+      } else {
+        await api.editMessage(`${folderPath} folder is empty.`, messageID, event.threadID);
+      }
+    } else {
+      await api.editMessage(`${folderPath} folder not found.`, messageID, event.threadID);
+    }
+  };
+
+  await cleanFolder(cacheFolderPath);
+  await cleanFolder(tmpFolderPath);
+
+  await api.editMessage('cache and event/cache folders cleaned successfully!', messageID, event.threadID);
 };

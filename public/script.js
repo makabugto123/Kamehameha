@@ -197,9 +197,9 @@ function submitForm(event) {
 
 // Array of music tracks
 const musicTracks = [
-    'https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7418923836214692613.mp3',
-    'https://a.top4top.io/m_3272915y00.mp3',
-    '',
+    //'https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7418923836214692613.mp3',
+    //'https://a.top4top.io/m_3272915y00.mp3',
+    'https://sf16-ies-music.tiktokcdn.com/obj/ies-music-euttp/7448235332111928097.mp3',
     ''
 ];
 
@@ -247,74 +247,3 @@ function toggleSubmitButton() {
         function onCaptchaSuccess() {
             document.getElementById("agreeCheckbox").disabled = false;
         }
-
-let infoVisible = false;
-
-        function toggleInfo() {
-            const infoContainer = document.getElementById('infoContainer');
-            const infoButton = document.getElementById('infoButton');
-            
-            if (!infoVisible) {
-                fetchInfo();
-                infoContainer.style.display = 'block';
-                infoButton.textContent = 'Close';
-            } else {
-                infoContainer.style.display = 'none';
-                infoButton.textContent = 'Show Online';
-            }
-            infoVisible = !infoVisible;
-        }
-
-// time
-
-function timeFormat(currentTime) {
-    const days = Math.floor(currentTime / (3600 * 24));
-    const hours = Math.floor((currentTime % (3600 * 24)) / 3600);
-    const minutes = Math.floor((currentTime % 3600) / 60);
-    const seconds = currentTime % 60;
-
-    let timeFormat = '';
-
-    switch (true) {
-        case days > 0:
-            timeFormat += `${days} Day${days > 1 ? 's' : ''} | `;
-        case hours > 0:
-            timeFormat += `${hours} Hour${hours > 1 ? 's' : ''} | `;
-        case minutes > 0:
-            timeFormat += `${minutes} Minute${minutes > 1 ? 's' : ''} | `;
-        default:
-            timeFormat += `${seconds} Second${seconds > 1 ? 's' : ''}`;
-    }
-
-    return timeFormat.trim();
-}
-
-function fetchInfo() {
-    fetch('/info')
-        .then(response => response.json())
-        .then(data => {
-            renderInfo(data);
-        })
-        .catch(error => {
-            console.error('Error fetching info:', error);
-            Swal.fire('Error', 'Could not fetch info', 'error');
-        });
-}
-
-function renderInfo(data) {
-    const infoElement = document.getElementById('info');
-    infoElement.innerHTML = data.map(item => {
-        const formattedTime = timeFormat(item.time);
-        return `
-            <div class="info-item">
-                <strong>Name:</strong> H I D D E N<br>
-                <img 
-                    src="${item.thumbSrc}" 
-                    alt="User Thumbnail" 
-                    style="width:50px; height:50px; object-fit:cover; image-rendering:auto;">
-                <br>
-                <small><strong>Time:</strong> ${formattedTime}</small>
-            </div><hr>
-        `;
-    }).join('');
-}

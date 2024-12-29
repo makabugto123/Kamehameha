@@ -1,21 +1,21 @@
 const axios = require('axios');
 
 module.exports.config = {
-  name: "gpt3",
+  name: "ai3", // Command name updated to "ai"
   version: 1.0,
-  credits: "Developer",
-  description: "An AI command powered by OpenAI",
+  credits: "heru",
+  description: "Conversational AI-powered chatbot using GPT-4o",
   hasPrefix: false,
   usages: "{pn} [prompt]",
   aliases: [],
-  cooldown: 5,
+  cooldown: 0,
 };
 
 module.exports.run = async function ({ api, event, args }) {
   try {
     const prompt = args.join(" ");
     if (!prompt) {
-      await api.sendMessage("Please provide a question.", event.threadID);
+      await api.sendMessage("🤖 Hey, I'm your virtual assistant, How can I assist you today?", event.threadID);
       return;
     }
 
@@ -25,12 +25,12 @@ module.exports.run = async function ({ api, event, args }) {
       }, event.messageID);
     });
 
-    const apiUrl = `https://kaiz-apis.gleeze.com/api/gpt-3.5?q=${encodeURIComponent(prompt)}`;
-    const response = await axios.get(apiUrl);
+    const uid = event.threadID;
+    const response = await axios.get(`https://kaiz-apis.gleeze.com/api/gpt-4o?q=${encodeURIComponent(prompt)}&uid=${uid}`);
     const answer = response.data.response;
 
     await api.editMessage(
-      `☀ | 𝗚𝗣𝗧-𝟯 𝗔𝗥𝗖𝗛𝗜𝗧𝗘𝗖𝗧𝗨𝗥𝗘\n━━━━━━━━━━━━━━━━━━\n${answer}\n━━━━━━━━━━━━━━━━━━`,
+      `${answer}`,
       initialMessage.messageID
     );
   } catch (error) {
