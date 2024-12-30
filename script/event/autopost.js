@@ -16,7 +16,7 @@ post["handleEvent"] = async function ({ api, admin }) {
 
     async function sendMotivation() {
       const currentTime = Date.now();
-        if (currentTime - lastPostTime < 20 * 60 * 1000) { /** for hours [< 30 * 60 * 60 * 1000] **/
+        if (currentTime - lastPostTime < 15 * 60 * 1000) { /** for hours [< 30 * 60 * 60 * 1000] **/
             return;
         }
         lastPostTime = currentTime;

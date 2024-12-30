@@ -1,3 +1,14 @@
+function formatFont(text) { 
+  const fontMapping = {
+    a: "𝖺", b: "𝖻", c: "𝖼", d: "𝖽", e: "𝖾", f: "𝖿", g: "𝗀", h: "𝗁", i: "𝗂", j: "𝗃", k: "𝗄", l: "𝗅", m: "𝗆",
+    n: "𝗇", o: "𝗈", p: "𝗉", q: "𝗊", r: "𝗋", s: "𝗌", t: "𝗍", u: "𝗎", v: "𝗏", w: "𝗐", x: "𝗑", y: "𝗒", z: "𝗓",
+    A: "𝖠", B: "𝖡", C: "𝖢", D: "𝖣", E: "𝖤", F: "𝖥", G: "𝖦", H: "𝖧", I: "𝖨", J: "𝖩", K: "𝖪", L: "𝖫", M: "𝖬",
+    N: "𝖭", O: "𝖮", P: "𝖯", Q: "𝖰", R: "𝖱", S: "𝖲", T: "𝖳", U: "𝖴", V: "𝖵", W: "𝖶", X: "𝖷", Y: "𝖸", Z: "𝖹"
+  };
+
+  return text.split('').map((char) => fontMapping[char] || char).join('');
+}
+
 module.exports.config = {
   name: 'help',
   version: '1.0.0',
@@ -31,21 +42,21 @@ module.exports.run = async function ({
       const start = (page - 1) * commandsPerPage;
       const end = Math.min(start + commandsPerPage, totalCommands);
 
-      helpMessage += `✨ 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗟𝗶𝘀𝘁\n━━━━━━━━━━━━━━━\n`;
+      helpMessage += `━━━━━━━━━━━━━━\n𝙰𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜:\n╭─╼━━━━━━━━╾─╮\n`;
 
       for (let i = start; i < end; i++) {
-        helpMessage += `⊂⊃ ➤ ${commands[i]}\n`;
+        helpMessage += `⊂⊃ ➠ ${formatFont(commands[i])}\n`;
       }
 
-      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}\n⊂⊃ ➤ 𝗣𝗮𝗴𝗲 ${page} of ${totalPages}\n⊂⊃ ➤ 𝗧𝗼 𝘀𝗲𝗲 𝗮𝗹𝗹 𝗰𝗼𝗺𝗺𝗮𝗻𝗱𝘀, 𝘁𝘆𝗽𝗲 "𝗵𝗲𝗹𝗽 𝗮𝗹𝗹".`;
+      helpMessage += `╰─━━━━━━━━━╾─╯\nChat -help all to see all commands\nTotal commands: ${totalCommands}\n━━━━━━━━━━━━━━`;
     } else if (input === 'all') {
-      helpMessage += `✨ 𝗔𝗹𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀\n━━━━━━━━━━━━━━━\n`;
+      helpMessage += `━━━━━━━━━━━━━━\n𝙰𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜:\n╭─╼━━━━━━━━╾─╮\n`;
 
       for (let i = 0; i < totalCommands; i++) {
-        helpMessage += `⊂⊃ ➤ ${commands[i]}\n`;
+        helpMessage += `⊂⊃ ➠ ${formatFont(commands[i])}\n`;
       }
 
-      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}`;
+      helpMessage += `╰─━━━━━━━━━╾─╯\nTotal commands: ${totalCommands}\n━━━━━━━━━━━━━━`;
     } else if (!isNaN(input)) {
       const page = parseInt(input);
       const totalPages = Math.ceil(totalCommands / commandsPerPage);
@@ -58,13 +69,13 @@ module.exports.run = async function ({
       const start = (page - 1) * commandsPerPage;
       const end = Math.min(start + commandsPerPage, totalCommands);
 
-      helpMessage += `✨ 𝗖𝗼𝗺𝗺𝗮𝗻𝗱 𝗟𝗶𝘀𝘁\n━━━━━━━━━━━━━━━\n`;
+      helpMessage += `━━━━━━━━━━━━━━\n𝙰𝚟𝚊𝚒𝚕𝚊𝚋𝚕𝚎 𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜:\n╭─╼━━━━━━━━╾─╮\n`;
 
       for (let i = start; i < end; i++) {
-        helpMessage += `⊂⊃ ➤ ${commands[i]}\n`;
+        helpMessage += `⊂⊃ ➠ ${formatFont(commands[i])}\n`;
       }
 
-      helpMessage += `━━━━━━━━━━━━━━━\n⊂⊃ ➤ 𝗧𝗼𝘁𝗮𝗹 𝗖𝗼𝗺𝗺𝗮𝗻𝗱𝘀: ${totalCommands}\n⊂⊃ ➤ 𝗣𝗮𝗴𝗲 ${page} of ${totalPages}`;
+      helpMessage += `╰─━━━━━━━━━╾─╯\nTotal commands: ${totalCommands}\nPage ${page} of ${totalPages}\n━━━━━━━━━━━━━━`;
     }
 
     await api.sendMessage(helpMessage, event.threadID, event.messageID);
@@ -79,7 +90,7 @@ module.exports.handleEvent = async function ({
   prefix
 }) {
   const { threadID, messageID, body } = event;
-  const message = prefix ? `𝗣𝗿𝗲𝗳𝗶𝘅 ➠ 【 ${prefix} 】` : "𝗣𝗿𝗲𝗳𝗶𝘅 ➠ 【 𝙽𝙾𝙽𝙴-𝙿𝚁𝙴𝙵𝙸𝚇 】";
+  const message = prefix ? `𝗣𝗿𝗲𝗳𝗶𝘅 ➠ ﹝${prefix}﹞` : "𝗣𝗿𝗲𝗳𝗶𝘅 ➠ ﹝𝙽𝙾𝙽𝙴-𝙿𝚁𝙴𝙵𝙸𝚇﹞";
   if (body?.toLowerCase().startsWith('prefix')) {
     api.sendMessage(message, threadID, messageID);
   }
