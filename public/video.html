@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Impossible</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000;
+        }
+
+        p {
+            color: #fff;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h1 {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            max-width: fit-content;
+        }
+
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <video autoplay loop controls>
+        <source src="https://g.top4top.io/m_32860zpma0.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h1>IMPOSSIBLE</h1>
+    <p>Hayyyystt ☹️</p>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: {
+                    type: "circle",
+                    stroke: { width: 0, color: "#000000" },
+                    polygon: { nb_sides: 5 },
+                },
+                opacity: { value: 0.5, random: false },
+                size: { value: 5, random: true },
+                line_linked: { enable: true, distance: 150, color: "#ffffff", opacity: 0.4, width: 1 },
+                move: { enable: true, speed: 6 },
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "grab" },
+                    onclick: { enable: true, mode: "push" },
+                },
+            },
+            retina_detect: true,
+        });
+    </script>
+</body>
+</html>

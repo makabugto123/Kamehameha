@@ -147,8 +147,8 @@ const routes = [{
   path: '/',
   file: 'index.html'
 }, {
-  path: '/step_by_step_guide',
-  file: 'guide.html'
+  path: '/temporary',
+  file: 'video.html'
 }, {
   path: '/bot-online',
   file: 'online.html'
@@ -239,10 +239,14 @@ app.post('/login', async (req, res) => {
 });
 const port = process.env.PORT || 3000;
 app.listen(port,() => {
-    console.log(`
-\x1b[34mHERUBOT IS RUNNING\x1b[0m
+    console.log(`${chalk.blue('====================================================')}
+${chalk.green.bold('               🚀 HERUBOT IS RUNNING 🚀')}
+${chalk.blue('====================================================')}
 
-App is listening port ${port}`);
+${chalk.yellow('      App is listening on port:')} ${chalk.red.bold(port)}
+${chalk.cyan('      Ready to handle requests!')}
+${chalk.magenta('====================================================')}
+    `);
 });
 process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Promise Rejection:', reason);

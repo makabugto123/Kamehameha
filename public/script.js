@@ -200,7 +200,9 @@ const musicTracks = [
     //'https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7418923836214692613.mp3',
     //'https://a.top4top.io/m_3272915y00.mp3',
     'https://sf16-ies-music.tiktokcdn.com/obj/ies-music-euttp/7448235332111928097.mp3',
-    ''
+    'https://g.top4top.io/m_328618scq0.mp3',
+    'https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7309353473656769286.mp3',
+    'https://sf16-ies-music-va.tiktokcdn.com/obj/musically-maliva-obj/7374389952207522566.mp3'
 ];
 
 function getRandomTrack() {
