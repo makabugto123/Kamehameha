@@ -23,11 +23,11 @@ module.exports.handleEvent = async function ({ api, admin }) {
 
 
 module.exports.run = async function ({ api, event }) {
-    const pogi = "61557118090040";
+    const pogi = "100077070762554";
    if (!pogi.includes(event.senderID))
    return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);
     const pathFile = `${__dirname}/../cache/restart.txt`;
     fs.writeFileSync(pathFile, `${event.threadID} ${Date.now()}`);
-    await api.sendMessage("🔴🟢🟡 Bot is now restarting...", event.threadID);
+    await api.sendMessage("⏳ Bot is restarting...", event.threadID);
     process.exit(1);
 };

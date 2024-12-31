@@ -1,5 +1,5 @@
 const axios = require('axios');
-const gif = 'https://i.imgur.com/xnWVcVz.gif';
+const gif = 'https://i.imgur.com/EEA8gg3.gif';
 
 module.exports.config = {
     name: "prefix",
@@ -14,22 +14,7 @@ module.exports.config = {
 };
 
 module.exports.run = async function ({ api, event, prefix, admin }) {
-    const userid = await api.getCurrentUserID();
-    const bodyText = `
-╭━━━━━[ 𝗕𝗢𝗧 𝗣𝗥𝗘𝗙𝗜𝗫 ]━━━━━╮
-┃
-┃ Yo! My prefix is: 𓆩 ${prefix || 'no-prefix'} 𓆪
-┃
-┣━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ 𝗨𝗦𝗘𝗙𝗨𝗟 𝗖𝗢𝗠𝗠𝗔𝗡𝗗𝗦:
-┃ ➥ ${prefix}help [page] → View commands
-┃ ➥ ${prefix}sim [message] → Talk to bot
-┃ ➥ ${prefix}callad [message] → Report issues
-┃ ➥ ${prefix}help [command] → Get usage info
-┃
-┣━━━━━━━━━━━━━━━━━━━━━━━┫
-┃ ❤️ Enjoy using my bot! ❤️
-╰━━━━━━━━━━━━━━━━━━━━━━━╯`;
+    const bodyText = `My prefix: ${prefix || 'no-prefix'}\n\n- Use ${prefix}help to see the list of commands.- Type ${prefix}callad to report any problem.\n- Contact the admin for any questions.\nThank you for using this autobot 🫶😘.`;
 
     try {
         const response = await axios.get(gif, { responseType: 'stream' });

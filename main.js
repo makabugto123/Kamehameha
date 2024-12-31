@@ -238,16 +238,26 @@ app.post('/login', async (req, res) => {
   }
 });
 const port = process.env.PORT || 3000;
-app.listen(port,() => {
-    console.log(`${chalk.blue('====================================================')}
-${chalk.green.bold('               🚀 HERUBOT IS RUNNING 🚀')}
-${chalk.blue('====================================================')}
 
-${chalk.yellow('      App is listening on port:')} ${chalk.red.bold(port)}
-${chalk.cyan('      Ready to handle requests!')}
-${chalk.magenta('====================================================')}
-    `);
+app.listen(port, () => {
+    console.log(`${chalk.blue('============================================================')}
+${chalk.green.bold('               🚀 HERUBOT IS NOW LIVE 🚀')}
+${chalk.blue('============================================================')}
+
+${chalk.yellow('       🌍 App is listening on port:')} ${chalk.red.bold(port)}
+${chalk.cyan('       🚀 Ready to handle your requests and serve you!')}
+${chalk.magenta('============================================================')}
+${chalk.white('       💬 Feel free to test our awesome features!')}
+${chalk.blue('============================================================')}
+
+${chalk.white(' ♡   ∩_∩')}
+${chalk.white('  („• ֊ •„)♡')}
+${chalk.white('┏━━━━━∪∪━━━━━━━━┓')}
+${chalk.green('♡')} ${chalk.yellow.bold('Rona Love You')} ${chalk.green('♡')}
+${chalk.white('┗━━━━━━━━━━━━━━━┛')}
+${chalk.white('━━━━━━━━━━━━━━━━━')}`);
 });
+
 process.on('unhandledRejection', (reason) => {
   console.error('Unhandled Promise Rejection:', reason);
 });
@@ -637,7 +647,7 @@ function createConfig() {
       admin: [],
       devMode: false,
       database: false,
-      restartTime: 9999,
+      restartTime: 999999,
     },
     fcaOption: {
       forceLogin: true,
