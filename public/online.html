@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>Active Sessions with Particles</title>
+      <title>𝗔𝗖𝗧𝗜𝗩𝗘 𝗦𝗘𝗦𝗦𝗜𝗢𝗡</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="icon" type="image/x-icon" href="https://i.imgur.com/FNc6BL7.jpeg">
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
@@ -12,14 +12,14 @@
             height: 100%;
             top: 0;
             left: 0;
-            z-index: -1; /* Place behind other content */
+            z-index: -1;
          }
 
          body {
             margin: 0;
             overflow: hidden;
             font-family: 'Montserrat', sans-serif;
-            background-color: #f4f4f9; /* Use a fallback background */
+            background-color: #f4f4f9;
          }
 
          h1 {
@@ -35,6 +35,32 @@
             max-width: fit-content;
          }
 
+         .scroll-container {
+            position: relative;
+            margin: 20px auto;
+            padding: 10px;
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            width: 90%;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+         }
+
+         .scroll-container::-webkit-scrollbar {
+            width: 8px;
+         }
+
+         .scroll-container::-webkit-scrollbar-thumb {
+            background-color: #355c7d;
+            border-radius: 10px;
+         }
+
+         .scroll-container::-webkit-scrollbar-thumb:hover {
+            background-color: #2c3e50;
+         }
+
          .user-card {
             display: flex;
             align-items: center;
@@ -46,7 +72,6 @@
             margin: 15px auto;
             color: white;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            max-width: 100%;
          }
 
          .user-card:hover {
@@ -81,7 +106,7 @@
          }
 
          .uptime-user {
-            font-style: italic;
+            font-style: bold;
             color: #6b8e23;
          }
 
@@ -107,7 +132,7 @@
          Your browser does not support the audio element.
       </audio>
       <h1>CURRENT ONLINE</h1>
-      <div id="user_online"></div>
+      <div class="scroll-container" id="user_online"></div>
 
       <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
       <script>
@@ -121,7 +146,7 @@
                   }
                },
                color: {
-                  value: "#000000" /* Black color */
+                  value: "#000000"
                },
                shape: {
                   type: "circle",
@@ -238,11 +263,11 @@
                   userInfo.className = 'user-info';
 
                   const userName = document.createElement('h4');
-                  userName.textContent = 'HIDDEN';
+                  userName.textContent = 'U S E R';
 
                   const uptimeUser = document.createElement('p');
                   uptimeUser.className = 'uptime-user';
-                  uptimeUser.textContent = `Active Since: ${timeFormat(time)}`;
+                  uptimeUser.textContent = `⏳ Uptime: ${timeFormat(time)}`;
 
                   userInfo.appendChild(userName);
                   userInfo.appendChild(uptimeUser);

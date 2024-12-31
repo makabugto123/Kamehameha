@@ -3,7 +3,7 @@ const ugh = require("axios");
 const sh = {};
 
 sh["config"] = {
-  name: "shoti",
+  name: "shoti2",
   version: "9",
   credits: "Cliff",
   description: "Generate random shoti 😝",

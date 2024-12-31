@@ -83,15 +83,3 @@ module.exports.run = async function ({
     console.log(error);
   }
 };
-
-module.exports.handleEvent = async function ({
-  api,
-  event,
-  prefix
-}) {
-  const { threadID, messageID, body } = event;
-  const message = prefix ? `𝗣𝗿𝗲𝗳𝗶𝘅 ➠ ﹝${prefix}﹞` : "𝗣𝗿𝗲𝗳𝗶𝘅 ➠ ﹝𝙽𝙾𝙽𝙴-𝙿𝚁𝙴𝙵𝙸𝚇﹞";
-  if (body?.toLowerCase().startsWith('prefix')) {
-    api.sendMessage(message, threadID, messageID);
-  }
-};
