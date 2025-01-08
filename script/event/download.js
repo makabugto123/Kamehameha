@@ -38,7 +38,7 @@ download["handleEvent"] = async function ({ api, event }) {
         });
 
         api.sendMessage({
-          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n🤖 𝗛𝗲𝗿𝘂 𝗕𝗼𝘁`,
+          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖳𝗂𝗄𝖳𝗈𝗄 \n\n𝙲𝚘𝚗𝚝𝚎𝚗𝚝: ${data.title}\n\n𝙻𝚒𝚔𝚎𝚜: ${data.digg_count}\n\n𝙲𝚘𝚖𝚖𝚎𝚗𝚝𝚜: ${data.comment_count}\n\n🤖𝗕𝗼𝘁`,
           attachment: videoStream.data
         }, event.threadID);
       } catch (error) {
@@ -114,7 +114,7 @@ download["handleEvent"] = async function ({ api, event }) {
         const videoData = await axios.get(encodeURI(result.sd), { responseType: 'stream' });
 
         api.sendMessage({
-          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄\n\nTitle: ${result.title}\n\n🤖 𝗛𝗲𝗿𝘂 𝗕𝗼𝘁`,
+          body: `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 𝖥𝖺𝖼𝖾𝖻𝗈𝗈𝗄\n\nTitle: ${result.title}\n\n🤖𝗕𝗼𝘁`,
           attachment: videoData.data
         }, event.threadID);
       } catch (e) {
