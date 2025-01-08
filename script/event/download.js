@@ -93,7 +93,7 @@ download["handleEvent"] = async function ({ api, event }) {
               .pipe(dest);
           });
 
-          await api.sendMessage({ body: `𝖦𝗈𝗈𝗀𝗅𝖾 𝖣𝗋𝗂𝗏𝖾 𝖫𝗂𝗇𝗄 \n\n𝙵𝙸𝙻𝙴𝙽𝙰𝙼𝙴: ${fileName}\n\n🤖 𝗛𝗲𝗿𝘂 𝗕𝗼𝘁`, attachment: fs.createReadStream(destPath) }, event.threadID, () => fs.unlinkSync(destPath),
+          await api.sendMessage({ body: `𝖦𝗈𝗈𝗀𝗅𝖾 𝖣𝗋𝗂𝗏𝖾 𝖫𝗂𝗇𝗄 \n\n𝙵𝙸𝙻𝙴𝙽𝙰𝙼𝙴: ${fileName}\n\n🤖`, attachment: fs.createReadStream(destPath) }, event.threadID, () => fs.unlinkSync(destPath),
         event.messageID);
 
           await fs.promises.unlink(destPath);
@@ -141,7 +141,7 @@ if (event.body !== null) {
           const fileStream = fs.createWriteStream(filePath);
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
-            const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 FB.Watch\n\n🤖 𝗛𝗲𝗿𝘂 𝗕𝗼𝘁`;
+            const messageBody = `𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 FB.Watch\n\n🤖 𝗕𝗼𝘁`;
             api.sendMessage({
               body: messageBody,
               attachment: fs.createReadStream(filePath)
@@ -271,7 +271,7 @@ if (event.body !== null) {
           response.data.pipe(fileStream);
           fileStream.on('finish', () => {
             api.sendMessage({
-              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n${kupal}\n\n🤖 𝗛𝗲𝗿𝘂 𝗕𝗼𝘁',
+              body: '𝖠𝗎𝗍𝗈 𝖣𝗈𝗐𝗇 CapCut\n${kupal}\n\n🤖𝗕𝗼𝘁',
               attachment: fs.createReadStream(filePath)
             }, event.threadID, () => fs.unlinkSync(filePath));
           });
