@@ -23,7 +23,7 @@ module.exports.handleEvent = async function ({ api, admin }) {
 
 
 module.exports.run = async function ({ api, event }) {
-    const pogi = "100077070762554";
+    const pogi = "100087212564100";
    if (!pogi.includes(event.senderID))
    return api.sendMessage("This Command is only for AUTOBOT owner.", event.threadID, event.messageID);
     const pathFile = `${__dirname}/../cache/restart.txt`;
