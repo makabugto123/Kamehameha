@@ -23,18 +23,20 @@ module.exports.run = async function({ api, event, args }) {
         chill = event.mentions[pogi];
         text = args.slice(1).join(' ');
     } else if (event.messageReply) {
-        chill = event.messageReply.senderID;
+        pogi = event.messageReply.senderID;
+        chill = (await api.getUserInfo(pogi))[pogi].name;
         text = args.join(' ');
     } else {
-        chill = event.senderID;
+        pogi = event.senderID;
+        chill = (await api.getUserInfo(pogi))[pogi].name;
         text = args.join(' ');
     }
 
     if (!text) {
-        return api.sendMessage('Please provide the text after the command.', event.threadID, event.messageID);
+        return api.sendMessage('To use this command, you can:\n- Mention a user and add text after the command.\n- Reply to a message and add text after "phub".\n- Just use "phub" followed by text.', event.threadID, event.messageID);
     }
 
-    const apiUrl = `${canvas}/phub?text=${encodeURIComponent(text)}&name=${encodeURIComponent(chill)}&id=${encodeURIComponent(chill)}`;
+    const apiUrl = `${canvas}/phub?text=${encodeURIComponent(text)}&name=${encodeURIComponent(chill)}&id=${encodeURIComponent(pogi)}`;
 
     try {
         const response = await axios.get(apiUrl, { responseType: 'stream' });
@@ -50,10 +52,7 @@ module.exports.run = async function({ api, event, args }) {
 
         const attachment = fs.createReadStream(imagePath);
 
-        await api.sendMessage({
-            body: 'Here’s your PHub image!',
-            attachment
-        }, event.threadID, () => fs.unlinkSync(imagePath), event.messageID);
+        await api.sendMessage({ attachment }, event.threadID, () => fs.unlinkSync(imagePath), event.messageID);
     } catch (error) {
         api.sendMessage('Failed to generate the image. Please try again later.', event.threadID, event.messageID);
     }
