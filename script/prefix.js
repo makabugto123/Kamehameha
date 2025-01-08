@@ -1,5 +1,5 @@
 const axios = require('axios');
-const gif = 'https://i.imgur.com/EEA8gg3.gif';
+const gif = 'https://i.imgur.com/piek9h4.gif';
 
 module.exports.config = {
     name: "prefix",
