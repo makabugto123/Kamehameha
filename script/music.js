@@ -1,84 +1,75 @@
 const axios = require('axios');
-const fs = require('fs-extra');
+const fs = require('fs');
 const path = require('path');
 
 module.exports.config = {
-  name: "music",
-  version: "2.0.6",
-  role: 0,
-  hasPermission: 0,
-  credits: "Jonell",
-  description: "Play a song from YouTube",
-  commandCategory: "utility",
-  usage: "[title]",
-  usePrefix: false,
-  hasPrefix: false,
-  aliases: ["sing"],
-  cooldown: 0
+    name: 'music',
+    version: '1.0.0',
+    role: 0,
+    hasPrefix: true,
+    aliases: ['sing'],
+    description: 'Search and download music using a keyword',
+    usage: 'music [search term]',
+    credits: 'churchill',
+    cooldown: 5,
 };
 
-module.exports.run = async ({ api, event, args }) => {
-  const search = args.join(" ");
-
-  try {
-    if (!search) {
-      const messageInfo = await new Promise(resolve => {
-        api.sendMessage('𝙿𝙻𝙴𝙰𝚂𝙴 𝙿𝚁𝙾𝚅𝙸𝙳𝙴 𝙰 𝚂𝙾𝙽𝙶 𝚃𝙸𝚃𝙻𝙴', event.threadID, (err, info) => {
-          resolve(info);
-        });
-      });
-
-      setTimeout(() => {
-        api.unsendMessage(messageInfo.messageID);
-      }, 10000);
-
-      return;
+module.exports.run = async function ({ api, event, args }) {
+    if (args.length === 0) {
+        return api.sendMessage('🎶 Please provide a search term. For example:\n\nmusic apt', event.threadID, event.messageID);
     }
 
-    const findingMessage = await api.sendMessage(`𝚂𝙴𝙰𝚁𝙲𝙷𝙸𝙽𝙶 𝙵𝙾𝚁 "${search}"`, event.threadID);
+    const searchTerm = args.join(' ');
+    const searchApiUrl = `https://dlvc.vercel.app/yt-audio?search=${encodeURIComponent(searchTerm)}`;
 
-        const videoSearchUrl = `https://betadash-search-download.vercel.app/yt?search=${search}`;
+    let searchingMessageID;
 
-        const videoResponse = await axios.get(videoSearchUrl);
-        const videoData = videoResponse.data[0];
+    try {
+        const searchingMessage = await api.sendMessage(`🔍 Searching for music: *${searchTerm}*`, event.threadID);
+        searchingMessageID = searchingMessage.messageID;
 
-        if (!videoData) {
-            return res.status(404).json({ error: 'Video not found' });
+        const response = await axios.get(searchApiUrl);
+        const { title, downloadUrl, time, views, Artist, Album, channelName } = response.data;
+
+        const musicPath = path.resolve(__dirname, 'music.mp3');
+        const musicStream = await axios({
+            url: downloadUrl,
+            method: 'GET',
+            responseType: 'stream',
+        });
+
+        const writer = fs.createWriteStream(musicPath);
+        musicStream.data.pipe(writer);
+
+        await new Promise((resolve, reject) => {
+            writer.on('finish', resolve);
+            writer.on('error', reject);
+        });
+
+        const messageContent = `🎶 Now Playing: ${title}
+📀 Album: ${Album}
+🎤 Artist: ${Artist}
+⏱️ Duration: ${time}
+👀 Views: ${views}
+📺 Channel: ${channelName}`;
+
+        await api.sendMessage(
+            {
+                body: messageContent,
+                attachment: fs.createReadStream(musicPath),
+            },
+            event.threadID,
+            event.messageID
+        );
+
+        if (searchingMessageID) {
+            api.unsendMessage(searchingMessageID);
         }
 
-const videoUrl = videoData.url;
+        fs.unlinkSync(musicPath);
 
-    const youtubeTrackUrl = `https://yt-video-production.up.railway.app/ytdl?url=${videoUrl}`;
-    const trackResponse = await axios.get(youtubeTrackUrl);
-
-    const { audio, title } = trackResponse.data;
-
-    const cacheDir = path.join(__dirname, 'cache');
-    const fileName = `music.mp3`;
-    const filePath = path.join(cacheDir, fileName);
-
-    fs.ensureDirSync(cacheDir);
-
-    const audioStream = await axios.get(audio, { responseType: 'arraybuffer' });
-    fs.writeFileSync(filePath, Buffer.from(audioStream.data));
-
-    api.sendMessage({
-      body: `💽 Now playing: ${title}`,
-      attachment: fs.createReadStream(filePath)
-    }, event.threadID, () => fs.unlinkSync(filePath), event.messageID);
-
-    api.unsendMessage(findingMessage.messageID);
-  } catch (error) {
-    const errorMessage = await new Promise(resolve => {
-      api.sendMessage('[ERROR] ' + error, event.threadID, (err, info) => {
-        resolve(info);
-      });
-    });
-
-    setTimeout(() => {
-      api.unsendMessage(errorMessage.messageID);
-    }, 10000);
-
-    return;
-  }
+    } catch (error) {
+        console.error('Error fetching or sending music:', error);
+        api.sendMessage('❌ Failed to fetch or send the music. Please try again later.', event.threadID, event.messageID);
+    }
 };
