@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const login = require('chatbox-fca-remake');
+const login = require('ws3-fca');
 const express = require('express');
 const app = express();
 const moment = require('moment-timezone');
