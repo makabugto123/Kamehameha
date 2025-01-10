@@ -38,7 +38,7 @@
     "pidusage": "^3.0.2",
     "request": "^2.53.0",
     "rsnchat": "^4.0.1",
-    "ws3-fca": "^1.0.30",
+    "ws3-fca": "^1.0.25",
     "ryuu-fca-api": "^3.2.2",
     "simple-youtube-api": "^5.2.1",
     "unlimited-ai": "^4.0.0",
