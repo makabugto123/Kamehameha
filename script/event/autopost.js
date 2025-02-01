@@ -21,13 +21,14 @@ post["handleEvent"] = async function ({ api, admin }) {
         }
         lastPostTime = currentTime;
         try {
-            const response = await axios.get("https://raw.githubusercontent.com/JamesFT/Database-Quotes-JSON/master/quotes.json");
-            const quotes = response.data;
+            const response = await axios.get("https://apis.iyot.plus/motiv");
+            const quotes = response.data.quoteText;
+            const author = response.data.quoteAuthor;
 
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            const randomQuote = quotes[randomIndex];
+           // const randomIndex = Math.floor(Math.random() * quotes.length);
+           // const randomQuote = quotes[randomIndex];
 
-            const formattedQuoteMessage = `🔔 Random 𝖬𝗈𝗍𝗂𝗏𝖺𝗍𝗂𝗈𝗇:\n\n${randomQuote.quoteText}\n\n- ${randomQuote.quoteAuthor}`;
+            const formattedQuoteMessage = `🔔 Random 𝖬𝗈𝗍𝗂𝗏𝖺𝗍𝗂𝗈𝗇:\n\n${quotes}\n\n- ${quoteAuthor}`;
             await api.createPost(formattedQuoteMessage);
         } catch (error) {
             console.error();
